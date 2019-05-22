@@ -1,8 +1,7 @@
 #pragma once
 
 #include <iostream>
-#include <sstream>
-#include <fstream>
+#include <ostream>
 //es el Dios del Trueno y los Vectores, el gran VecThor
 
 using namespace std;
@@ -174,7 +173,10 @@ template <typename T> vecthor<T>* vecthor<T>::insert(unsigned int pos, const T& 
 	if (pos < 0) return NULL;
 	if (pos >= size()) return setsize(pos, a); //si pones un valor mayor, rellena hasta dicho valor
 	if (pos == 0) {
-
+		vt = vt->siguiente;
+		vt_anterior->siguiente = new vecthor(vt_anterior->valor); //crea uno nuevo en la segunda posición con el valor del primero
+		vt_anterior->siguiente->siguiente = vt;
+		vt_anterior->valor = a;
 	}
 	for (int i = 0; i < pos; i++) {
 		vt_anterior = vt;
@@ -214,6 +216,8 @@ template <typename T> T& vecthor<T>::operator [] (unsigned int pos) {
 	return vt->valor; 
 }
 
-template <typename T> ostream&  operator << (ostream& o, vecthor<T> v) {
-	return o << v.print(o);
+//lo defino fuera
+template <typename T> ostream&  operator << (ostream& o, vecthor<T>& v) {
+	v.print(o);
+	return o;
 }
